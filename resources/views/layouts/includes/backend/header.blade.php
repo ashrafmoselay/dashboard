@@ -43,8 +43,26 @@
 
     @yield('style')
     @stack('style')
+     {{-- @import url(https://fonts.googleapis.com/earlyaccess/amiri.css);
+    /* font-family: 'Amiri', serif; */
+
+    @import url(https://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+    /*font-family: 'Droid Arabic Naskh', serif;*/
+
+    @import url(https://fonts.googleapis.com/earlyaccess/lateef.css);
+    /* font-family: 'Lateef', serif; */
+
+    @import url(https://fonts.googleapis.com/earlyaccess/scheherazade.css);
+    /*font-family: 'Scheherazade', serif;*/
+
+    @import url(https://fonts.googleapis.com/earlyaccess/thabit.css);
+    /* font-family: 'Thabit', serif; */ --}}
+    {{-- <link href='https://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css' rel='stylesheet'> --}}
     <style>
         .bg-gradient-striped-grey-blue{background-image:-webkit-linear-gradient(135deg,#337ab7 25%,transparent 25%,transparent 50%,#337ab7 50%,#337ab7 75%,transparent 75%,transparent);
+        /* html,body,* {
+            font-family: 'Droid Arabic Naskh', serif!important;
+        } */
     </style>
 </head>
 

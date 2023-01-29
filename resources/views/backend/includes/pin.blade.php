@@ -14,7 +14,7 @@
         <button type="button" class="btn btn-primary easy-submit">حفظ</button>
     </form>
 </div>
-<div id="points">
+<div id="points" class="form-group">
 
 </div>
 <!-- popover -->
@@ -29,32 +29,47 @@
 <script type="text/javascript">
     var cord = getQueryParam("cord");
     var name = getQueryParam("name");
+
     if(cord && name){
-        var cords = cord.split(",");
+
+        @php
+            $pointsList = [
+                ["content"=>"point1","coords"=>["lat"=>"479","long"=>"77"]],
+                ["content"=>"point#2","coords"=>["lat"=>"543","long"=>"184"]]
+            ];
+            $cordinates = $pointsList;
+        @endphp
+        let cord = @json($cordinates);
+        var myString = "";
+        cord.forEach((v,k) => {
+            myString += '"'+k+'":'+JSON.stringify(v);
+            if(cord.length != k+1){
+                myString+= ",";
+            }
+        });
         var $instance = $('.pin').easypin({
-            init: '{"jizLvySUzI":{"0":{"content":"'+name+'","coords":{"lat":"'+cords[0]+'","long":"'+cords[1]+'"}},"canvas":{"src":"{{asset('easypin/condition.jpg')}}","width":"950","height":"562"}}}',
+            init: '{"jizLvySUzI":{'+myString+',"canvas":{"src":"{{asset('easypin/condition.jpg')}}","width":"950","height":"562"}}}',
             //limit:1,
             drop: function(x, y, element) {
-
-                $('.points', parent.document).val(x+","+y);
+                var markerIndex = element.attr('data-index');
+                addCordDataForm(markerIndex,x,y);
             },
             drag: function(x, y, element) {
-                $('.points', parent.document).val(x+","+y);
+                var markerIndex = element.attr('data-index');
+                addCordDataForm(markerIndex,x,y);
             }
         });
     }else{
         var $instance = $('.pin').easypin({
-            //init: '{"jizLvySUzI":{"0":{"content":"Ashraf Test","coords":{"lat":"70","long":"107"}},"canvas":{"src":"{{asset('easypin/avengers.jpg')}}","width":"950","height":"562"}}}',
+            //init: '{"jizLvySUzI":{'+myString+',"canvas":{"src":"{{asset('easypin/condition.jpg')}}","width":"950","height":"562"}}}',
             //limit:1,
             drop: function(x, y, element) {
                 var markerIndex = element.attr('data-index');
                 addCordDataForm(markerIndex,x,y);
             },
             drag: function(x, y, element) {
-                //console.log(element.attr('data-index'));
                 var markerIndex = element.attr('data-index');
                 addCordDataForm(markerIndex,x,y);
-                //$('#points', parent.document).val(x+","+y);
             }
         });
     }
@@ -71,7 +86,7 @@
             container.find(".x").val(x);
             container.find(".y").val(y);
         }else{
-            $("#points").append('<div class="row-'+markerIndex+'"> <input class="pinname" type="text" value="" name="cord['+markerIndex+'][name]"/> <input class="x" type="text" value="'+x+'" name="cord['+markerIndex+'][x]"/> <input class="y" type="text" value="'+y+'" name="cord['+markerIndex+'][y]"/> </div>');
+            $("#points").append('<div class="row-'+markerIndex+'"> <input class="pinname form-control" type="text" value="" name="cord['+markerIndex+'][name]"/> <input class="x form-control" type="text" value="'+x+'" name="cord['+markerIndex+'][x]"/> <input class="y form-control" type="text" value="'+y+'" name="cord['+markerIndex+'][y]"/> </div>');
         }
     }
 </script>

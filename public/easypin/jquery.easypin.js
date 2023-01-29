@@ -1291,8 +1291,15 @@
 	};
 
     var dataInsert = function(parentId, markerIndex, data) {
-        $("#points").find(".row-"+markerIndex).remove();
-        $("#points").append('<div class="row-'+markerIndex+'"> <input type="text" value="'+data.content+'" name="cord['+markerIndex+'][name]"/> <input type="text" value="'+data.coords.lat+'" name="cord['+markerIndex+'][x]"/> <input type="text" value="'+data.coords.long+'" name="cord['+markerIndex+'][y]"/> </div>');
+        //$("#points").find(".row-"+markerIndex).remove();
+        var container = $("#points").find(".row-"+markerIndex);
+        if(container.length){
+            container.find(".x").val(data.coords.lat);
+            container.find(".y").val(data.coords.long);
+            container.find(".pinname").val(data.content);
+        }else{
+            $("#points").append('<div class="row-'+markerIndex+'"> <input class="pinname form-control" type="text" value="'+data.content+'" name="cord['+markerIndex+'][name]"/> <input type="text" class="x form-control" value="'+data.coords.lat+'" name="cord['+markerIndex+'][x]"/> <input type="text" class="y form-control" value="'+data.coords.long+'" name="cord['+markerIndex+'][y]"/> </div>');
+        }
         if(localStorage) {
             storageInsert(parentId, markerIndex, data);
         }else{
